@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/textStartMark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/startMark"
+        app:layout_constraintEnd_toStartOf="@+id/textTopMark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <EditText
+        android:id="@+id/startMark"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:layout_marginVertical="10dp"
+        android:layout_marginTop="10dp"
+        android:inputType="numberDecimal"
+
+        app:layout_constraintEnd_toStartOf="@+id/topMark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textStartMark" />
+
+    <TextView
+        android:id="@+id/textTopMark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/topMark"
+        app:layout_constraintEnd_toStartOf="@+id/textBottomMark"
+        app:layout_constraintStart_toEndOf="@+id/textStartMark"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/topMark"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:layout_marginVertical="10dp"
+        android:layout_marginTop="10dp"
+        android:inputType="numberDecimal"
+        android:maxEms="3"
+        app:layout_constraintEnd_toStartOf="@+id/bottomMark"
+        app:layout_constraintStart_toEndOf="@+id/startMark"
+        app:layout_constraintTop_toBottomOf="@+id/textTopMark" />
+
+    <TextView
+        android:id="@+id/textBottomMark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/topMark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textTopMark"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <EditText
+        android:id="@+id/bottomMark"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:layout_marginVertical="10dp"
+        android:layout_marginTop="10dp"
+        android:inputType="numberDecimal"
+        android:maxEms="3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/topMark"
+        app:layout_constraintTop_toBottomOf="@+id/textBottomMark" />
+
+    <EditText
+        android:id="@+id/iterationNumber"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:layout_marginVertical="10dp"
+        android:inputType="numberDecimal"
+        android:maxEms="3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/populationSize"
+        app:layout_constraintTop_toBottomOf="@+id/textIterationNumber" />
+
+    <EditText
+        android:id="@+id/populationSize"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:layout_marginVertical="10dp"
+        android:inputType="numberDecimal"
+        android:maxEms="3"
+        app:layout_constraintEnd_toStartOf="@+id/iterationNumber"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textPopulationSize" />
+
+    <TextView
+        android:id="@+id/textPopulationSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/population_size"
+        app:layout_constraintEnd_toStartOf="@+id/textIterationNumber"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startMark" />
+
+    <TextView
+        android:id="@+id/textIterationNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/iteration_number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textPopulationSize"
+        app:layout_constraintTop_toBottomOf="@+id/topMark" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mutationChance"
+        app:layout_constraintBottom_toTopOf="@+id/mutationSeekbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.425"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatSeekBar
+        android:id="@+id/mutationSeekbar"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="60dp"
+        app:layout_constraintEnd_toStartOf="@+id/mutationText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/populationSize" />
+
+    <TextView
+        android:id="@+id/mutationText"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.627"
+        app:layout_constraintStart_toEndOf="@+id/mutationSeekbar"
+        app:layout_constraintTop_toTopOf="@+id/mutationSeekbar" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/crossBreedingChance"
+        app:layout_constraintBottom_toTopOf="@+id/crossBreedingSeekbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.425"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatSeekBar
+        android:id="@+id/crossBreedingSeekbar"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="60dp"
+        app:layout_constraintEnd_toStartOf="@+id/crossBreedingText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mutationSeekbar" />
+
+    <TextView
+        android:id="@+id/crossBreedingText"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/crossBreedingSeekbar"
+        app:layout_constraintTop_toTopOf="@+id/crossBreedingSeekbar" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cutOffChance"
+        app:layout_constraintBottom_toTopOf="@+id/cutOffSeekbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.425"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatSeekBar
+        android:id="@+id/cutOffSeekbar"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="60dp"
+        app:layout_constraintEnd_toStartOf="@+id/cutOffText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/crossBreedingSeekbar" />
+
+
+    <TextView
+        android:id="@+id/cutOffText"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cutOffSeekbar"
+        app:layout_constraintTop_toTopOf="@+id/cutOffSeekbar" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/setOff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toEndOf="@+id/chipGroup"
+        app:layout_constraintTop_toTopOf="@+id/chipGroup"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroup"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cutOffSeekbar"
+        app:singleSelection="true">
+
+        <com.google.android.material.chip.Chip
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/intCoding" />
+
+        <com.google.android.material.chip.Chip
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/floatCoding" />
+
+    </com.google.android.material.chip.ChipGroup>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

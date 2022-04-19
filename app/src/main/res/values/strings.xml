@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Генетический Алгоритм</string>
+    <string name="startMark">Левая граница</string>
+    <string name="topMark">Верхняя граница</string>
+    <string name="botMark">Нижняя граница</string>
+    <string name="population_size">Размер популяции</string>
+    <string name="iteration_number">Количество итераций</string>
+    <string name="mutationChance">Вероятность мутаций</string>
+    <string name="cutOffChance">Порог отсечения</string>
+    <string name="crossBreedingChance">Вероятность скрещивания</string>
+    <string name="setOff">Запустить</string>
+    <string name="intCoding">Целочисленное кодирование</string>
+    <string name="floatCoding">Вещественное кодирование</string>
+</resources>
