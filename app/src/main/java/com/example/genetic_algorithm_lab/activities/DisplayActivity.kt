@@ -25,6 +25,7 @@ class DisplayActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         binding = ActivityDisplayBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        minPoints.clear()
         if (coding) {
             val intCode = IntGeneticAlgorithm()
             intCode.genAlgorithm()
@@ -81,10 +82,10 @@ class DisplayActivity : AppCompatActivity(),
     }
 
     override fun onValueSelected(e: Entry?, h: Highlight?) {
-        TODO("Not yet implemented")
+        Log.e("","")
     }
 
     override fun onNothingSelected() {
-        TODO("Not yet implemented")
+        Log.e("","")
     }
 }

@@ -1,5 +1,6 @@
 package com.example.genetic_algorithm_lab.intCode
 
+import android.util.Log
 import com.example.genetic_algorithm_lab.utils.LIMIT
 import com.example.genetic_algorithm_lab.utils.Parameters
 import com.example.genetic_algorithm_lab.utils.Parameters.crossbreedingProbability
@@ -16,21 +17,15 @@ class IntGeneticAlgorithm {
     private val population: IntPopulation = IntPopulation(size) //формирование популяции
     private val minPointsLocal = ArrayList<Double>()
 
-    init {
-        for (i in 0..numberOfIterations) {
-            minPointsLocal.add(0.0)
-        }
-    }
-
     fun genAlgorithm(): IntIndividual //Основной алгоритм
     {
         var i = 0
         while (i < numberOfIterations) {
-            crossBreeding() //Метод, который реализует скрещивание особей
-            mutation() //Метод, отвечающий за мутацию
             assessment() //Метод, выполняющий рассчет приспособленности и сортировку по значению оценочной функции
             truncateSelection() //Метод, благодаря которому осуществляется отбор особей
-            addPoint()
+            crossBreeding() //Метод, который реализует скрещивание особей
+            mutation() //Метод, отвечающий за мутацию
+            addPoint() // для графика
             if (abs(population[0].fitness - population[sizeN].fitness) <= 0.001) {
                 break // проверка на вырожденную популяцию
             }
@@ -65,7 +60,6 @@ class IntGeneticAlgorithm {
         }
         sum /= sizeN
 
-
         minPointsLocal.add(min)
     }
 
@@ -74,9 +68,10 @@ class IntGeneticAlgorithm {
         var i = size - 1
         while (i > l * size) {
             for (j in 0..9) {
-                population[i].string[j] = false
+                population[i].bits[j] = false
             }
             population[i].decode()
+            Log.e("!!!!!!!!!!!",population[i].x.toString() )
             sizeN--
             i--
         }
@@ -95,13 +90,14 @@ class IntGeneticAlgorithm {
             {
                 for (r in 0 until randomDivider)  // гены до 1 точки разрыва
                 {
-                    population[sizeN].string[r] = population[i].string[r]
+                    population[sizeN].bits[r] = population[i].bits[r]
                 }
                 for (t in randomDivider..9)  // гены после 1 точки разрыва
                 {
-                    population[sizeN].string[t] = population[j].string[t]
+                    population[sizeN].bits[t] = population[j].bits[t]
                 }
                 population[sizeN].decode()
+                Log.e("decode",population[sizeN].x.toString())
                 sizeN++
             }
         }
@@ -113,7 +109,7 @@ class IntGeneticAlgorithm {
         for (i in 0 until sizeN) {
             for (j in 0..9) {
                 if (mutation > (Random.nextInt(0, LIMIT) % size) % 100 * 0.01) {
-                    population[i].string[j] = !population[i].string[j]
+                    population[i].bits[j] = !population[i].bits[j]
                 }
             }
             population[i].decode()
