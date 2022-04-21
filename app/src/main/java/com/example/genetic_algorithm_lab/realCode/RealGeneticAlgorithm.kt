@@ -1,31 +1,38 @@
-package com.example.genetic_algorithm_lab
+package com.example.genetic_algorithm_lab.realCode
 
-import com.example.genetic_algorithm_lab.Parameters.cutOff
-import com.example.genetic_algorithm_lab.Parameters.numberOfIterations
-import com.example.genetic_algorithm_lab.Parameters.permutationChance
-import com.example.genetic_algorithm_lab.Parameters.populationSize
-import com.example.genetic_algorithm_lab.Parameters.crossbreedingProbability
+import android.util.Log
+import com.example.genetic_algorithm_lab.utils.LIMIT
+import com.example.genetic_algorithm_lab.utils.Parameters
+import com.example.genetic_algorithm_lab.utils.Parameters.crossbreedingProbability
+import com.example.genetic_algorithm_lab.utils.Parameters.cutOff
+import com.example.genetic_algorithm_lab.utils.Parameters.numberOfIterations
+import com.example.genetic_algorithm_lab.utils.Parameters.permutationChance
+import com.example.genetic_algorithm_lab.utils.Parameters.populationSize
 import kotlin.math.abs
 import kotlin.random.Random
 
 
-class GeneticAlgorithm // управляющий класс
+class RealGeneticAlgorithm // управляющий класс
 {
     private val size: Int = populationSize //начальный размер популяции
     private var sizeN = size //размер популяции, который будет изменяться во время работы программы
-    private val population = Population(size) //Формирование популяции
-    fun genAlgorithm(): Individual {
+    private val population = RealPopulation(size) //Формирование популяции
+    private val minPointsLocal = ArrayList<Double>()
+
+
+    fun genAlgorithm(): RealIndividual {
         for (i in 0 until numberOfIterations)  // Количество итераций
         {
             assessment() //Метод, выполняющий рассчет приспособленности и сортировку по значению оценочной функции
             truncateSelection() //Метод, благодаря которому осуществляется отбор особей
             crossBreeding() //Метод, который реализует скрещивание особей
             mutation() //Метод, отвечающий за мутацию
-            graphic() // для графика
+            addPoint() // для графика
             if (abs(population[0].fitness - population[sizeN - 1].fitness) <= 0.001) {
                 break // проверка на вырожденную популяцию
             }
         }
+        Parameters.minPoints = minPointsLocal
         return population[0]
     }
 
@@ -34,7 +41,7 @@ class GeneticAlgorithm // управляющий класс
         return x * x + 4 // оценочная функция
     }
 
-    private fun graphic() // нахождение минимального значения и среднего значения функции по итерациям
+    private fun addPoint() // нахождение минимального значения и среднего значения функции по итерациям
     {
         var sum = 0.0
         var min = 99999.0
@@ -45,39 +52,17 @@ class GeneticAlgorithm // управляющий класс
             }
         }
         sum /= sizeN
-/*
-        todo graphic functions
 
-        SrPoints.get(k) = sum
-        MinPoints.get(k) = min
-        k++
-*/
+        //SrPoints[k] = sum
+        minPointsLocal.add(min)
     }
 
     private fun assessment() {
-        var h: Int
         for (i in 0 until sizeN)  // рассчет оценочной функции(приспобленности)
         {
             population[i].fitness = func(population[i].x)
         }
-        h = 1
-        while (h <= sizeN / 9) {
-            //сортировка Шелла (Индекс у более приспобленных меньше)
-            h = h * 3 + 1
-        }
-
-        while (h >= 1) {
-            for (i in h until sizeN) {
-                var j = i - h
-                while (j >= 0 && population[j].fitness > population[j + h].fitness) {
-                    val temp: Individual = population[j]
-                    population[j] = population[j + h]
-                    population[j + h] = temp
-                    j -= h
-                }
-            }
-            h = (h - 1) / 3
-        }
+        sort()
     }
 
     private fun truncateSelection() // селекция усечением
@@ -85,36 +70,61 @@ class GeneticAlgorithm // управляющий класс
         val l: Double = cutOff / 100 //порог отсечения
         var i = size - 1
         while (i > l * size) {
-            /* todo fix
-            population[i].x = null
-            population[i].fitness = null*/
+
+            population[i].x = 0.0
+            population[i].fitness = 0.0
             sizeN--
             i--
         }
     }
 
+
     private fun crossBreeding() // Метод, осуществляющий арифметический кроссинговер
     {
         val size = sizeN
-        val p: Double = crossbreedingProbability / 100 //Вероятность скрещивания
+        val probability: Double = crossbreedingProbability / 100 //Вероятность скрещивания
         while (sizeN < this.size) //цикл будет до тех пор, пока число особей не вернется к первоначальному количеству
         {
-            val i = (Random.nextInt() % size)
-            val j = (Random.nextInt() % size)
-            val l: Double = Random.nextInt() % 100 * 0.01
-            if (p > Random.nextInt() % 100 * 0.01) {
-                population[sizeN++].x = l * population[i].x + (1 - l) * population[j].x
+            if (size != 0) {
+                val i = (Random.nextInt(LIMIT) % size)
+                val j = (Random.nextInt(LIMIT) % size)
+                val l: Double = Random.nextInt(LIMIT) % 100 * 0.01
+                if (probability > Random.nextInt(LIMIT) % 100 * 0.01) {
+                    population[sizeN++].x = l * population[i].x + (1 - l) * population[j].x
+                }
             }
         }
         sizeN--
     }
 
     private fun mutation() {
-        val mut: Double = permutationChance / 100 //вероятность мутации
+        val mutationChance: Double = permutationChance / 100 //вероятность мутации
         for (i in 0 until sizeN) {
-            if (mut > Random.nextInt() % 100 * 0.01) {
-                population[i].x += Random.nextInt() % 50 * 0.01 - Random.nextInt() % 50 * 0.01
+            if (mutationChance > Random.nextInt(LIMIT) % 100 * 0.01) {
+                population[i].x += Random.nextInt(LIMIT) % 50 * 0.01 - Random.nextInt(1000) % 50 * 0.01
             }
+        }
+    }
+
+    fun check() {
+        for (i in 0..size) {
+            Log.e("ppp", population[i].x.toString())
+        }
+    }
+
+    private fun sort() {
+        var h = 1
+        while (h >= 1) {
+            for (i in h until sizeN) {
+                var j = i - h
+                while (j >= 0 && population[j].fitness > population[j + h].fitness) {
+                    val temp: RealIndividual = population[j]
+                    population[j] = population[j + h]
+                    population[j + h] = temp
+                    j -= h
+                }
+            }
+            h = (h - 1) / 3
         }
     }
 }

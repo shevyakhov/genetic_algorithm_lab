@@ -5,78 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
 
-    <TextView
-        android:id="@+id/textStartMark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="10dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/startMark"
-        app:layout_constraintEnd_toStartOf="@+id/textTopMark"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <EditText
-        android:id="@+id/startMark"
-        android:layout_width="70dp"
-        android:layout_height="50dp"
-        android:layout_marginVertical="10dp"
-        android:layout_marginTop="10dp"
-        android:inputType="numberDecimal"
-
-        app:layout_constraintEnd_toStartOf="@+id/topMark"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textStartMark" />
-
-    <TextView
-        android:id="@+id/textTopMark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="10dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/topMark"
-        app:layout_constraintEnd_toStartOf="@+id/textBottomMark"
-        app:layout_constraintStart_toEndOf="@+id/textStartMark"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/topMark"
-        android:layout_width="70dp"
-        android:layout_height="50dp"
-        android:layout_marginVertical="10dp"
-        android:layout_marginTop="10dp"
-        android:inputType="numberDecimal"
-        android:maxEms="3"
-        app:layout_constraintEnd_toStartOf="@+id/bottomMark"
-        app:layout_constraintStart_toEndOf="@+id/startMark"
-        app:layout_constraintTop_toBottomOf="@+id/textTopMark" />
-
-    <TextView
-        android:id="@+id/textBottomMark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="10dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/topMark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textTopMark"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <EditText
-        android:id="@+id/bottomMark"
-        android:layout_width="70dp"
-        android:layout_height="50dp"
-        android:layout_marginVertical="10dp"
-        android:layout_marginTop="10dp"
-        android:inputType="numberDecimal"
-        android:maxEms="3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/topMark"
-        app:layout_constraintTop_toBottomOf="@+id/textBottomMark" />
 
     <EditText
         android:id="@+id/iterationNumber"
@@ -104,21 +34,19 @@
         android:id="@+id/textPopulationSize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:text="@string/population_size"
         app:layout_constraintEnd_toStartOf="@+id/textIterationNumber"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startMark" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textIterationNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:text="@string/iteration_number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textPopulationSize"
-        app:layout_constraintTop_toBottomOf="@+id/topMark" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:layout_width="wrap_content"
