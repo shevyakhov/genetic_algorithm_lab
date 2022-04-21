@@ -11,21 +11,7 @@ class IntIndividual {
     var bits: BooleanArray
     private var size = 10 //разрядность
 
-
     fun decode() //метод декодирования,
-    { //для перевода закодированного двоичного значения гена в дробное;
-        var value = 0.0
-        var razryad = 1.0
-        for (j in size - 1 downTo 0) {
-            if (bits[j]) {
-                value += razryad
-            }
-            razryad *= 2
-        }
-        x = xMin + (xMax - xMin) * value / (razryad - 1)
-        fitness = x * x + 4
-    }
-    fun decodea() //метод декодирования,
     {
         var str = ""
         for (i in bits){
@@ -36,6 +22,7 @@ class IntIndividual {
         }
         val int = str.toInt(2)
         x = int.toDouble()
+        Log.e("xxxxx", x.toString())
         fitness = x * x + 4
     }
 
@@ -52,6 +39,8 @@ class IntIndividual {
                 xyu+="0"
 
         }
-        Log.e("x",xyu)
+        Log.e("_",xyu)
+        decode()
+        Log.e("fit",fitness.toString())
     }
 }

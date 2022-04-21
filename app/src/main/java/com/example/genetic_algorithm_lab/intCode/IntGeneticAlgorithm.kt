@@ -21,10 +21,10 @@ class IntGeneticAlgorithm {
     fun genAlgorithm(): IntIndividual {
         for (i in 0 until numberOfIterations)  // Количество итераций
         {
-            crossBreeding() //Метод, который реализует скрещивание особей
-            mutation() //Метод, отвечающий за мутацию
             assessment() //Метод, выполняющий рассчет приспособленности и сортировку по значению оценочной функции
             truncateSelection() //Метод, благодаря которому осуществляется отбор особей
+            crossBreeding() //Метод, который реализует скрещивание особей
+            mutation() //Метод, отвечающий за мутацию
             addPoint() // для графика
             if (abs(population[0].fitness - population[sizeN - 1].fitness) <= 0.001) {
                 break // проверка на вырожденную популяцию
@@ -109,7 +109,10 @@ class IntGeneticAlgorithm {
                     population[i].bits[j] = !population[i].bits[j]
                 }
             }
+            Log.e("mutation","mutation")
             population[i].decode()
+            Log.e("mutation","END")
+
         }
     }
 
