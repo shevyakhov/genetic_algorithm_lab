@@ -1,6 +1,7 @@
 package com.example.genetic_algorithm_lab.intCode
 
 import android.util.Log
+import com.example.genetic_algorithm_lab.realCode.RealIndividual
 import com.example.genetic_algorithm_lab.utils.LIMIT
 import com.example.genetic_algorithm_lab.utils.Parameters
 import com.example.genetic_algorithm_lab.utils.Parameters.crossbreedingProbability
@@ -12,24 +13,22 @@ import kotlin.math.abs
 import kotlin.random.Random
 
 class IntGeneticAlgorithm {
-    private val size: Int = populationSize //начальный размер популяции
+    private val size: Int = populationSize-1 //начальный размер популяции
     private var sizeN = size //размер популяции, который будет изменяться во время работы программы
     private val population: IntPopulation = IntPopulation(size) //формирование популяции
     private val minPointsLocal = ArrayList<Double>()
 
-    fun genAlgorithm(): IntIndividual //Основной алгоритм
-    {
-        var i = 0
-        while (i < numberOfIterations) {
-            assessment() //Метод, выполняющий рассчет приспособленности и сортировку по значению оценочной функции
-            truncateSelection() //Метод, благодаря которому осуществляется отбор особей
+    fun genAlgorithm(): IntIndividual {
+        for (i in 0 until numberOfIterations)  // Количество итераций
+        {
             crossBreeding() //Метод, который реализует скрещивание особей
             mutation() //Метод, отвечающий за мутацию
+            assessment() //Метод, выполняющий рассчет приспособленности и сортировку по значению оценочной функции
+            truncateSelection() //Метод, благодаря которому осуществляется отбор особей
             addPoint() // для графика
-            if (abs(population[0].fitness - population[sizeN].fitness) <= 0.001) {
+            if (abs(population[0].fitness - population[sizeN - 1].fitness) <= 0.001) {
                 break // проверка на вырожденную популяцию
             }
-            i++
         }
         Parameters.minPoints = minPointsLocal
         return population[0]
@@ -71,7 +70,6 @@ class IntGeneticAlgorithm {
                 population[i].bits[j] = false
             }
             population[i].decode()
-            Log.e("!!!!!!!!!!!",population[i].x.toString() )
             sizeN--
             i--
         }
@@ -97,7 +95,6 @@ class IntGeneticAlgorithm {
                     population[sizeN].bits[t] = population[j].bits[t]
                 }
                 population[sizeN].decode()
-                Log.e("decode",population[sizeN].x.toString())
                 sizeN++
             }
         }
