@@ -1,6 +1,7 @@
 package com.example.genetic_algorithm_lab.utils
 
 object Parameters {
+    var sumPoints = ArrayList<Double>()
     var populationSize: Int = 0
     var coding: Boolean = false
     var numberOfIterations: Int = 0

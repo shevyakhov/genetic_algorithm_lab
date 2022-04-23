@@ -1,7 +1,7 @@
 package com.example.genetic_algorithm_lab.intCode
 
 import android.util.Log
-import com.example.genetic_algorithm_lab.realCode.RealIndividual
+import com.example.genetic_algorithm_lab.utils.BIT_LENGTH
 import com.example.genetic_algorithm_lab.utils.LIMIT
 import com.example.genetic_algorithm_lab.utils.Parameters
 import com.example.genetic_algorithm_lab.utils.Parameters.crossbreedingProbability
@@ -13,10 +13,11 @@ import kotlin.math.abs
 import kotlin.random.Random
 
 class IntGeneticAlgorithm {
-    private val size: Int = populationSize-1 //начальный размер популяции
+    private val size: Int = populationSize - 1 //начальный размер популяции
     private var sizeN = size //размер популяции, который будет изменяться во время работы программы
     private val population: IntPopulation = IntPopulation(size) //формирование популяции
     private val minPointsLocal = ArrayList<Double>()
+    private val sumPointsLocal = ArrayList<Double>()
 
     fun genAlgorithm(): IntIndividual {
         for (i in 0 until numberOfIterations)  // Количество итераций
@@ -31,6 +32,7 @@ class IntGeneticAlgorithm {
             }
         }
         Parameters.minPoints = minPointsLocal
+        Parameters.sumPoints = sumPointsLocal
         return population[0]
     }
 
@@ -59,6 +61,7 @@ class IntGeneticAlgorithm {
         }
         sum /= sizeN
 
+        sumPointsLocal.add(sum)
         minPointsLocal.add(min)
     }
 
@@ -66,7 +69,7 @@ class IntGeneticAlgorithm {
         val l: Double = cutOff / 100 //порог отсечения
         var i = size - 1
         while (i > l * size) {
-            for (j in 0..9) {
+            for (j in 0 until BIT_LENGTH) {
                 population[i].bits[j] = false
             }
             population[i].decode()
@@ -77,7 +80,8 @@ class IntGeneticAlgorithm {
 
     private fun crossBreeding() // Скрещивание особей с помощью 1 - точечного кроссинговера
     {
-        val randomDivider: Int = Random.nextInt(0, 100) % (10 - 2) + 1 // случайная точка разрыва
+        val randomDivider: Int =
+            Random.nextInt(0, 100) % (BIT_LENGTH - 2) + 1 // случайная точка разрыва
         val p: Double = crossbreedingProbability / 100 //Вероятность скрещивания
         val size = sizeN //Для формирования потомков
         while (sizeN < this.size) //Восстанавливаем количество потомков
@@ -90,11 +94,13 @@ class IntGeneticAlgorithm {
                 {
                     population[sizeN].bits[r] = population[i].bits[r]
                 }
-                for (t in randomDivider..9)  // гены после 1 точки разрыва
+                for (t in randomDivider until BIT_LENGTH)  // гены после 1 точки разрыва
                 {
                     population[sizeN].bits[t] = population[j].bits[t]
                 }
+                Log.e("crossBreeding", "crossBreeding")
                 population[sizeN].decode()
+                Log.e("crossBreeding", "End CB")
                 sizeN++
             }
         }
@@ -104,14 +110,14 @@ class IntGeneticAlgorithm {
     {
         val mutation: Double = permutationChance / 100 //вероятность мутации
         for (i in 0 until sizeN) {
-            for (j in 0..9) {
+            for (j in 0 until BIT_LENGTH) {
                 if (mutation > (Random.nextInt(0, LIMIT) % size) % 100 * 0.01) {
                     population[i].bits[j] = !population[i].bits[j]
                 }
             }
-            Log.e("mutation","mutation")
+            Log.e("mutation", "mutation")
             population[i].decode()
-            Log.e("mutation","END")
+            Log.e("mutation", "END")
 
         }
     }

@@ -1,5 +1,6 @@
 package com.example.genetic_algorithm_lab.activities
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -10,11 +11,13 @@ import com.example.genetic_algorithm_lab.intCode.IntGeneticAlgorithm
 import com.example.genetic_algorithm_lab.realCode.RealGeneticAlgorithm
 import com.example.genetic_algorithm_lab.utils.Parameters.coding
 import com.example.genetic_algorithm_lab.utils.Parameters.minPoints
+import com.example.genetic_algorithm_lab.utils.Parameters.sumPoints
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
 
@@ -26,6 +29,7 @@ class DisplayActivity : AppCompatActivity(),
         binding = ActivityDisplayBinding.inflate(layoutInflater)
         setContentView(binding.root)
         minPoints.clear()
+        sumPoints.clear()
         if (coding) {
             val intCode = IntGeneticAlgorithm()
             intCode.genAlgorithm()
@@ -36,29 +40,53 @@ class DisplayActivity : AppCompatActivity(),
 
 
         val lineEntry = ArrayList<Entry>()
+        val lineEntrySum = ArrayList<Entry>()
         Log.e("e", minPoints.toString())
-        minPoints.sortDescending()
-        Toast.makeText(this, "${minPoints.size}", Toast.LENGTH_SHORT).show()
-        for (i in minPoints.size - 2 downTo 0) {
+
+        for (i in minPoints.indices) {
             lineEntry.add(
+                /* Entry(
+                     func(minPoints[i].toFloat()),
+                     minPoints[i].toFloat()
+                 )*/
                 Entry(
-                    func(minPoints[i].toFloat()),
+                    (i).toFloat(),
                     minPoints[i].toFloat()
+                )
+            )
+
+        }
+        for (i in sumPoints.indices) {
+            lineEntrySum.add(
+                Entry(
+                    (i).toFloat(),
+                    sumPoints[i].toFloat()
                 )
             )
         }
 
 
         val lineDataset = LineDataSet(lineEntry, whatVal())
+        val lineSumDataset = LineDataSet(lineEntrySum, getString(R.string.avSum))
+        lineSumDataset.color = Color.RED;
+        lineSumDataset.setCircleColor(Color.RED);
+        lineSumDataset.lineWidth = 2f;
+        lineDataset.lineWidth = 2f;
         lineDataset.color = resources.getColor(R.color.teal_200)
-        val data = LineData(lineDataset)
+        val data = LineData(lineDataset, lineSumDataset)
         binding.chart.description.text = whatCode()
         binding.chart.setBorderColor(getColor(R.color.broken))
         binding.chart.fitScreen()
         binding.chart.data = data
         binding.chart.setBackgroundColor(resources.getColor(R.color.hearts))
         binding.chart.animateXY(3000, 3000)
-
+        minPoints.sort()
+        Toast.makeText(
+            this,
+            "Найденный минимум \n" +
+                    "(${(func(minPoints[0].toFloat())).toInt()},${minPoints[0].roundToInt()})",
+            Toast.LENGTH_LONG
+        ).show()
 
     }
 
@@ -82,10 +110,10 @@ class DisplayActivity : AppCompatActivity(),
     }
 
     override fun onValueSelected(e: Entry?, h: Highlight?) {
-        Log.e("","")
+        Log.e("", "")
     }
 
     override fun onNothingSelected() {
-        Log.e("","")
+        Log.e("", "")
     }
 }

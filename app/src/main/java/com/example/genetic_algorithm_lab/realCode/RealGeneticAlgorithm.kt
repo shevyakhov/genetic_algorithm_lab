@@ -18,6 +18,7 @@ class RealGeneticAlgorithm // управляющий класс
     private var sizeN = size //размер популяции, который будет изменяться во время работы программы
     private val population = RealPopulation(size) //Формирование популяции
     private val minPointsLocal = ArrayList<Double>()
+    private val sumPointsLocal = ArrayList<Double>()
 
 
     fun genAlgorithm(): RealIndividual {
@@ -33,6 +34,7 @@ class RealGeneticAlgorithm // управляющий класс
             }
         }
         Parameters.minPoints = minPointsLocal
+        Parameters.sumPoints = sumPointsLocal
         return population[0]
     }
 
@@ -53,7 +55,7 @@ class RealGeneticAlgorithm // управляющий класс
         }
         sum /= sizeN
 
-        //SrPoints[k] = sum
+        sumPointsLocal.add(sum)
         minPointsLocal.add(min)
     }
 
