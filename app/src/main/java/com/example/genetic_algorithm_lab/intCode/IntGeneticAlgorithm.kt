@@ -125,7 +125,6 @@ class IntGeneticAlgorithm {
     private fun sort() {
         var h = 1
         while (h <= sizeN / 9) {
-            //сортировка Шелла (Индекс у более приспобленных меньше)
             h = h * 3 + 1
         }
 
